@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maureen Evangelio - IT Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f3f5f9;
+      color: #222;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #e2e2e2;
+      background: linear-gradient(135deg, #cc6fe4, #38b6ff);
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 1.7rem;
+      margin-bottom: 4px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-labels {
+      display: flex;
+      flex-wrap: wrap;
+      background: #f8f9fb;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tab-labels label {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+      padding: 12px 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      border-right: 1px solid #e1e1e1;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .tab-labels label:last-child {
+      border-right: none;
+    }
+
+    .tab-labels label:hover {
+      background: #e8f1ff;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 24px;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    /* Show content when tab is checked */
+    #tab-profile:checked ~ .tab-contents #content-profile,
+    #tab-numbers:checked ~ .tab-contents #content-numbers,
+    #tab-history:checked ~ .tab-contents #content-history,
+    #tab-apps:checked ~ .tab-contents #content-apps {
+      display: block;
+    }
+
+    /* Active tab label style */
+    #tab-profile:checked ~ .tab-labels label[for="tab-profile"],
+    #tab-numbers:checked ~ .tab-labels label[for="tab-numbers"],
+    #tab-history:checked ~ .tab-labels label[for="tab-history"],
+    #tab-apps:checked ~ .tab-labels label[for="tab-apps"] {
+      background: #ffffff;
+      color: #0050c8;
+      box-shadow: inset 0 -2px 0 #0050c8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Generic content styling */
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #0050c8;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 18px 0 6px;
+      color: #333;
+    }
+
+    h4 {
+      margin: 12px 0 6px;
+      font-size: 1rem;
+    }
+
+    p {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-gap: 18px;
+      margin-top: 10px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .label {
+      font-weight: bold;
+      display: inline-block;
+      width: 120px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .small-note {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 6px;
+    }
+
+    /* Number systems table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid #d0d7e2;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #edf2ff;
+      font-weight: bold;
+    }
+
+    /* History layout */
+    .history-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      grid-gap: 14px;
+      align-items: flex-start;
+      padding: 14px 12px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .history-item img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #d0d7e2;
+      background: #fff;
+      object-fit: cover;
+    }
+
+    .history-item h3 {
+      margin-top: 0;
+    }
+
+    .media-block {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f5f5ff;
+      border: 1px dashed #9ca3ff;
+      font-size: 0.9rem;
+    }
+
+    video {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+      outline: none;
+    }
+
+    /* Application software */
+    .app-section {
+      margin-bottom: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .app-section h3 {
+      margin-top: 0;
+    }
+
+    .app-image-wrapper {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .app-image-wrapper img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #d0d7e2;
+      background: #fff;
+    }
+
+    .app-labels {
+      font-size: 0.93rem;
+      margin-top: 6px;
+    }
+
+    .app-labels li span {
+      font-weight: bold;
+    }
+
+    @media (max-width: 700px) {
+      .history-item {
+        grid-template-columns: 1fr;
+      }
+
+      .tab-labels label {
+        font-size: 0.85rem;
+        padding: 10px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Maureen Evangelio</h1>
+      <p>Profile • Number Systems • History of Computers • Application Software</p>
+    </header>
+
+    <section class="tabs">
+      <!-- Radio buttons (hidden) -->
+      <input type="radio" name="tabs" id="tab-profile" checked />
+      <input type="radio" name="tabs" id="tab-numbers" />
+      <input type="radio" name="tabs" id="tab-history" />
+      <input type="radio" name="tabs" id="tab-apps" />
+
+      <!-- Tab labels -->
+      <div class="tab-labels">
+        <label for="tab-profile">Profile</label>
+        <label for="tab-numbers">Number Systems</label>
+        <label for="tab-history">History of Computers</label>
+        <label for="tab-apps">Application Software</label>
+      </div>
+
+      <!-- Tab contents -->
+      <div class="tab-contents">
+
+        <!-- PROFILE TAB -->
+        <div class="tab-content" id="content-profile">
+          <h2>Profile</h2>
+
+          <div class="info-grid">
+            <!-- Personal Information -->
+            <div class="card">
+              <h3>Personal Information</h3>
+              <p><span class="label">Name:</span> Maureen Evangelio</p>
+              <p><span class="label">Address:</span> Antipolo City </p>
+              <p><span class="label">Email:</span> evangeliomawi@gmail.com </p>
+            
+              </p>
+            </div>
+
+            <!-- Educational Background -->
+            <div class="card">
+              <h3>Educational Background</h3>
+              <p><strong>BS Information Technology</strong></p>
+              <p>AMA University Online Education</p>
+              <p>2025 – present</p>
+
+              <br />
+
+              <p><strong>ANTIPOLO INSTITUTE OF TECHNOLOGY</strong></p>
+              <p>2020 – 2022</p>
+
+              <br />
+
+              <p><strong>ST. JOHNS WORT MONTESSORI SCHOOL OF ANTIPOLO</strong></p>
+              <p>2018 – 2020</p>
+            </div>
+          </div>
+
+          <!-- Talents / Skills -->
+          <div class="card" style="margin-top:16px;">
+            <h3>Talents / Skills</h3>
+            <ul>
+              <li>Drawing – traditional</li>
+              <li>Drawing – digital</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- NUMBER SYSTEMS TAB -->
+        <div class="tab-content" id="content-numbers">
+          <h2>Number Systems</h2>
+          <p>
+            In Computer Science, data is represented using different
+            <strong>number systems</strong>. The most common are
+            <strong>Decimal</strong>, <strong>Binary</strong>,
+            <strong>Octal</strong>, and <strong>Hexadecimal</strong>.
+          </p>
+
+          <table>
+            <tr>
+              <th>Number System</th>
+              <th>Base</th>
+              <th>Digits Used</th>
+              <th>Definition</th>
+            </tr>
+            <tr>
+              <td>Decimal</td>
+              <td>10</td>
+              <td>0–9</td>
+              <td>The system we use in everyday life; based on ten symbols.</td>
+            </tr>
+            <tr>
+              <td>Binary</td>
+              <td>2</td>
+              <td>0, 1</td>
+              <td>The system used internally by computers; uses only two digits.</td>
+            </tr>
+            <tr>
+              <td>Octal</td>
+              <td>8</td>
+              <td>0–7</td>
+              <td>Base-8 system; sometimes used as a shorthand form of binary.</td>
+            </tr>
+            <tr>
+              <td>Hexadecimal</td>
+              <td>16</td>
+              <td>0–9, A–F</td>
+              <td>Base-16 system; commonly used for memory addresses and color codes.</td>
+            </tr>
+          </table>
+
+          <h3>Conversion Steps (Radix to Radix)</h3>
+
+          <h4>1. Decimal → Binary</h4>
+          <ol>
+            <li>Divide the decimal number by 2.</li>
+            <li>Record the remainder (0 or 1).</li>
+            <li>Use the quotient and divide again by 2.</li>
+            <li>Repeat until the quotient is 0.</li>
+            <li>Read the remainders from <strong>bottom to top</strong>.</li>
+          </ol>
+          <p><strong>Example:</strong> 13₁₀ → 1101₂</p>
+
+          <h4>2. Binary → Decimal</h4>
+          <ol>
+            <li>Write the binary number.</li>
+            <li>Assign powers of 2 from right to left (2⁰, 2¹, 2², ...).</li>
+            <li>Multiply each bit (0 or 1) by its corresponding power of 2.</li>
+            <li>Add all the products.</li>
+          </ol>
+          <p><strong>Example:</strong> 1101₂ = (1×2³) + (1×2²) + (0×2¹) + (1×2⁰) = 13₁₀</p>
+
+          <h4>3. Decimal → Octal</h4>
+          <ol>
+            <li>Divide the decimal number by 8.</li>
+            <li>Record the remainder.</li>
+            <li>Use the quotient and divide again by 8.</li>
+            <li>Repeat until the quotient is 0.</li>
+            <li>Read the remainders from bottom to top.</li>
+          </ol>
+
+          <h4>4. Decimal → Hexadecimal</h4>
+          <ol>
+            <li>Divide the decimal number by 16.</li>
+            <li>Record the remainder (0–15). Use A–F for 10–15.</li>
+            <li>Use the quotient and divide again by 16.</li>
+            <li>Repeat until the quotient is 0.</li>
+            <li>Read the remainders from bottom to top.</li>
+          </ol>
+
+          <h4>5. Binary ↔ Octal (Shortcut)</h4>
+          <p><strong>Binary → Octal</strong></p>
+          <ol>
+            <li>Group the binary digits into sets of 3 from right to left.</li>
+            <li>Convert each group of 3 bits to its octal equivalent.</li>
+          </ol>
+          <p><strong>Octal → Binary</strong>: Convert each octal digit to a 3-bit binary value.</p>
+
+          <h4>6. Binary ↔ Hexadecimal (Shortcut)</h4>
+          <p><strong>Binary → Hexadecimal</strong></p>
+          <ol>
+            <li>Group the binary digits into sets of 4 from right to left.</li>
+            <li>Convert each group of 4 bits to its hexadecimal equivalent.</li>
+          </ol>
+          <p><strong>Hexadecimal → Binary</strong>: Convert each hex digit to a 4-bit binary value.</p>
+        </div>
+
+        <!-- HISTORY OF COMPUTERS TAB -->
+        <div class="tab-content" id="content-history">
+          <h2>History of Computers</h2>
+          <p>
+            Computers have evolved through several generations, each introducing
+            new technology and improvements in size, speed, and reliability.
+          </p>
+
+          <!-- 1st Generation -->
+          <div class="history-item">
+            <img src="images/gen1.jpg" alt="First generation computers (vacuum tubes)" />
+            <div>
+              <h3>First Generation (1940s – 1950s)</h3>
+              <p>
+                First-generation computers used <strong>vacuum tubes</strong> as
+                the main electronic component. They were very large, produced a
+                lot of heat, and consumed a lot of electricity. Programming was
+                done in machine language.
+              </p>
+             
+              </p>
+            </div>
+          </div>
+
+          <!-- 2nd Generation -->
+          <div class="history-item">
+            <img src="images/gen2.jpg" alt="Second generation computers (transistors)" />
+            <div>
+              <h3>Second Generation (1950s – 1960s)</h3>
+              <p>
+                Second-generation computers used <strong>transistors</strong>
+                instead of vacuum tubes. They were smaller, faster, cheaper,
+                and more reliable. High-level languages like COBOL and FORTRAN
+                were introduced.
+              </p>
+              
+              </p>
+            </div>
+          </div>
+
+          <!-- 3rd Generation -->
+          <div class="history-item">
+            <img src="images/gen3.jpg" alt="Third generation computers (ICs)" />
+            <div>
+              <h3>Third Generation (1960s – 1970s)</h3>
+              <p>
+                Third-generation computers used <strong>integrated circuits (ICs)</strong>,
+                which combined many transistors on a single chip. This made
+                computers even smaller, more powerful, and more efficient.
+              </p>
+              
+              </p>
+            </div>
+          </div>
+
+          <!-- 4th Generation -->
+          <div class="history-item">
+            <img src="images/gen4.jpg" alt="Fourth generation computers (microprocessors)" />
+            <div>
+              <h3>Fourth Generation (1970s – Present)</h3>
+              <p>
+                Fourth-generation computers use <strong>microprocessors</strong>,
+                where thousands or millions of transistors are integrated in one
+                chip. This generation introduced personal computers, laptops,
+                and mobile devices.
+              </p>
+              
+              </p>
+            </div>
+          </div>
+
+          <!-- 5th Generation -->
+          <div class="history-item">
+            <img src="images/gen5.jpg" alt="Fifth generation computers (AI and advanced tech)" />
+            <div>
+              <h3>Fifth Generation (Present and Beyond)</h3>
+              <p>
+                Fifth-generation computers focus on <strong>artificial intelligence (AI)</strong>,
+                advanced parallel processing, and new technologies such as
+                quantum computing. The aim is to develop systems that can
+                make intelligent decisions.
+              </p>
+              
+              </p>
+            </div>
+          </div>
+
+          <!-- Video block -->
+          <div class="media-block">
+            <strong>Video Recording – Activity 1</strong>
+            <p>
+            
+            </p>
+            <!-- Replace "videos/activity1.mp4" with your actual file path/name -->
+            <iframe
+                width="100%"
+                height="315"
+                src="https://drive.google.com/file/d/12F9wyJLu4Sd67GOpEtODYP68Yu3xNk9n/view?usp=drive_link"
+                frameborder="0"
+                allowfullscreen>
+</iframe>
+          </div>
+        </div>
+
+        <!-- APPLICATION SOFTWARE TAB -->
+        <div class="tab-content" id="content-apps">
+          <h2>Application Software</h2>
+          <p>
+            Below are examples of the environments of Microsoft Word, Excel, and
+            PowerPoint. Each image is accompanied by labels and explanations.
+          </p>
+
+          <!-- WORD -->
+          <div class="app-section">
+            <h3>Microsoft Word</h3>
+            <div class="app-image-wrapper">
+              <!-- Replace this src with your own Word screenshot -->
+              <img src="images/word-environment.jpg" alt="Microsoft Word environment" />
+            </div>
+            
+            </p>
+            <h4>Labels and Explanations</h4>
+            <ul class="app-labels">
+              <li><span>Title Bar:</span> Shows the document name and Word application.</li>
+              <li><span>Ribbon:</span> Contains tabs (Home, Insert, Layout, etc.) with groups of commands.</li>
+              <li><span>Quick Access Toolbar:</span> Shortcuts to common commands like Save and Undo.</li>
+              <li><span>Document Area:</span> Main area where you type and edit your text.</li>
+              <li><span>Status Bar:</span> Displays information such as page number and word count.</li>
+            </ul>
+          </div>
+
+          <!-- EXCEL -->
+          <div class="app-section">
+            <h3>Microsoft Excel</h3>
+            <div class="app-image-wrapper">
+              <!-- Replace this src with your own Excel screenshot -->
+              <img src="images/excel-environment.jpg" alt="Microsoft Excel environment" />
+            </div>
+           
+            </p>
+            <h4>Labels and Explanations</h4>
+            <ul class="app-labels">
+              <li><span>Title Bar:</span> Shows the workbook name and Excel application.</li>
+              <li><span>Ribbon:</span> Contains tabs (Home, Formulas, Data, etc.) with command groups.</li>
+              <li><span>Formula Bar:</span> Displays and allows editing of the active cell’s content or formula.</li>
+              <li><span>Worksheet Area (Cells):</span> Grid of rows and columns where data is entered.</li>
+              <li><span>Sheet Tabs:</span> Switch between different worksheets in the workbook.</li>
+            </ul>
+          </div>
+
+          <!-- POWERPOINT -->
+          <div class="app-section">
+            <h3>Microsoft PowerPoint</h3>
+            <div class="app-image-wrapper">
+              <!-- Replace this src with your own PowerPoint screenshot -->
+              <img src="images/powerpoint-environment.jpg" alt="Microsoft PowerPoint environment" />
+            </div>
+            
+            </p>
+            <h4>Labels and Explanations</h4>
+            <ul class="app-labels">
+              <li><span>Title Bar:</span> Shows the presentation name and PowerPoint application.</li>
+              <li><span>Ribbon:</span> Contains tabs such as Home, Design, Transitions, Slide Show, etc.</li>
+              <li><span>Slides Pane:</span> Displays thumbnail previews of all slides.</li>
+              <li><span>Slide Area:</span> Main area where you design and edit the current slide.</li>
+              <li><span>Notes Pane:</span> Area where you can type speaker notes for each slide.</li>
+            </ul>
+          </div>
+
+          <!-- Activity 2 video -->
+          <div class="media-block">
+            <strong>Video Recording – Activity 2</strong>
+            <p>
+            </p>
+            <!-- Replace "videos/activity2.mp4" with your actual file path/name -->
+            <iframe
+              width="100%"
+              height="315"
+              src="https://drive.google.com/file/d/1GuBz12WEKGE_EYl5WMgwef6wbtES2CAO/view?usp=drive_link"
+              frameborder="0"
+              allowfullscreen>
+</iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</body>
+</html>
